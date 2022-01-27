@@ -4,15 +4,8 @@ pipeline {
         stage('Building') {
             steps {
                 sh 'docker build -t rest-api .'
-                script {
-                    docker.withRegistry(
-                        'https://268769556228.dkr.ecr.us-east-2.amazonaws.com',
-                        'ecr:us-east-2:aws1'
-                    ) {
-                        def myImage = docker.build('rest-api')
-                        myImage.push('rest-api')
-                    }
-                }
+                sh 'docker tag rest-api:latest 268769556228.dkr.ecr.us-east-2.amazonaws.com/rest-api:latest'
+                sh 'docker push 268769556228.dkr.ecr.us-east-2.amazonaws.com/rest-api:latest'
             }
         }
     }
