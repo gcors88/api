@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                sh 'docker login -u glauber -p vertrigo7'
                 sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 268769556228.dkr.ecr.us-east-2.amazonaws.com'
                 sh 'docker build -t rest-api .'
                 sh 'docker tag rest-api:latest 268769556228.dkr.ecr.us-east-2.amazonaws.com/rest-api:latest'
